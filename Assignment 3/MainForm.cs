@@ -3,9 +3,8 @@ namespace Assignment_3
     public partial class MainForm : Form
     {
         private const int HAND_SIZE = 5;
-        private const int NO_CARDS = -1;
-        private List<int> deck = new List<int>();
-        private int[] hand = new int[HAND_SIZE];
+        private Deck deck;
+        private Card?[] hand = new Card?[HAND_SIZE];
         private Random rng = new Random();
 
         // file dialog stuff
@@ -14,6 +13,7 @@ namespace Assignment_3
         public MainForm()
         {
             InitializeComponent();
+            deck = new Deck(cardImageList); // Move initialization here
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -39,13 +39,23 @@ namespace Assignment_3
             {
                 GetKeepBox(i).Checked = false;
             }
-            DealHand();
+
+            // Start with a fresh shuffled deck for a brand new hand
+            deck.Shuffle();
+
+            // Deal five cards from the deck
+            for (int i = 0; i < HAND_SIZE; i++)
+            {
+                hand[i] = deck.DealCard(); // Deck.DealCard() returns a Card (or null if empty)
+            }
+
+            UpdateHandImages();
         }
 
         private void DealHand()
         {
+            // If no cards are kept we need a fresh shuffled deck
             bool anyKept = false;
-
             for (int i = 0; i < HAND_SIZE; i++)
             {
                 if (GetKeepBox(i).Checked)
@@ -57,44 +67,19 @@ namespace Assignment_3
 
             if (!anyKept)
             {
-                deck.Clear();
-                for (int i = 0; i < cardImageList.Images.Count; i++)
-                {
-                    deck.Add(i);
-                }
-                Shuffle(deck);
+                deck.Shuffle();
             }
 
+            // For each slot that is NOT kept, replace it with the next card from the deck
             for (int i = 0; i < HAND_SIZE; i++)
             {
                 if (!GetKeepBox(i).Checked)
                 {
-                    if (deck.Count > 0)
-                    {
-                        hand[i] = deck[0];
-                        deck.RemoveAt(0);
-                    }
-                    else
-                    {
-                        hand[i] = NO_CARDS;
-                    }
+                    hand[i] = deck.DealCard(); // may be null if deck is exhausted
                 }
             }
 
             UpdateHandImages();
-        }
-
-        private void Shuffle<T>(IList<T> list)
-        {
-            for (int i = list.Count - 1; i > 0; i--)
-            {
-                int j = rng.Next(i + 1);
-
-                // tuple swap
-                T temp = list[i];
-                list[i] = list[j];
-                list[j] = temp;
-            }
         }
 
         private void UpdateHandImages()
@@ -102,10 +87,11 @@ namespace Assignment_3
             for (int i = 0; i < HAND_SIZE; i++)
             {
                 var pic = GetPictureBox(i);
-                int index = hand[i];
-                if (index >= 0 && index < cardImageList.Images.Count) // if index is valid
+                var card = hand[i];
+
+                if (card != null && card.Id >= 0 && card.Id < cardImageList.Images.Count)
                 {
-                    pic.Image = cardImageList.Images[index];
+                    pic.Image = cardImageList.Images[card.Id];
                 }
                 else
                 {
