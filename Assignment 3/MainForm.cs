@@ -5,7 +5,6 @@ namespace Assignment_3
         private const int HAND_SIZE = 5;
         private Deck deck;
         private Card?[] hand = new Card?[HAND_SIZE];
-        private Random rng = new Random();
 
         // file dialog stuff
         private const string DEFAULT_EXT = "txt";
@@ -149,12 +148,17 @@ namespace Assignment_3
 
             try
             {
-                using (var sw = new StreamWriter(saveFileDialog.FileName)) // ensures file closes
+                // Deck.SaveHand expects a non-null Card[] so I use Card(-1) to denote no card
+                Card[] toSave = new Card[HAND_SIZE];
+                for (int i = 0; i < HAND_SIZE; i++)
                 {
-                    for (int i = 0; i < HAND_SIZE; i++) // writes hand indices to a separate line in the file
-                    {
-                        sw.WriteLine(hand[i]);
-                    }
+                    toSave[i] = hand[i] ?? new Card(-1);
+                }
+
+                if (!deck.SaveHand(saveFileDialog.FileName, toSave))
+                {
+                    // Fancy error messages were stolen from stack overflow
+                    MessageBox.Show("Failed to save hand.", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -165,20 +169,26 @@ namespace Assignment_3
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            if(openFileDialog.ShowDialog() != DialogResult.OK)
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
             try
             {
-                string[] lines = File.ReadAllLines(openFileDialog.FileName); // array for all lines in the file
+                Card[] loaded = new Card[HAND_SIZE];
 
-                // loop over each card slot, parse the line, set the hand array, reset the keep checkboxes
-                for(int i = 0; i < HAND_SIZE; i++)
+                if (!deck.LoadHand(openFileDialog.FileName, loaded))
                 {
-                    hand[i] = (i < lines.Length && int.TryParse(lines[i], out int val)
-                        && val >= 0 && val < cardImageList.Images.Count) ? val : NO_CARDS;
+                    MessageBox.Show("Failed to load hand.", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Convert loaded cards into hand slots and reset keep boxes
+                for (int i = 0; i < HAND_SIZE; i++)
+                {
+                    var c = loaded[i];
+                    hand[i] = (c != null && c.Id >= 0 && c.Id < cardImageList.Images.Count) ? c : null;
                     GetKeepBox(i).Checked = false;
                 }
 
