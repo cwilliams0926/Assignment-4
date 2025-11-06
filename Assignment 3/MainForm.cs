@@ -162,7 +162,7 @@ namespace Assignment_3
 
             try
             {
-                // Deck.SaveHand expects a non-null Card[] so I use Card(-1) to denote no card
+                // Deck.SaveHand expects a non-null Card[] so I use Card(-1) for no card
                 Card[] toSave = new Card[HAND_SIZE];
                 for (int i = 0; i < HAND_SIZE; i++)
                 {
@@ -214,5 +214,29 @@ namespace Assignment_3
             }
         }
 
+        private void cardPictureBox1_Click(object sender, EventArgs e)
+        {
+            keepCheckBox1.Checked = !keepCheckBox1.Checked;
+        }
+
+        private void cardPictureBox2_Click(object sender, EventArgs e)
+        {
+            keepCheckBox2.Checked = !keepCheckBox2.Checked;
+        }
+
+        private void cardPictureBox3_Click(object sender, EventArgs e)
+        {
+            keepCheckBox3.Checked = !keepCheckBox3.Checked;
+        }
+
+        private void cardPictureBox4_Click(object sender, EventArgs e)
+        {
+            keepCheckBox4.Checked = !keepCheckBox4.Checked;
+        }
+
+        private void cardPictureBox5_Click(object sender, EventArgs e)
+        {
+            keepCheckBox5.Checked = !keepCheckBox5.Checked;
+        }
     }
 }

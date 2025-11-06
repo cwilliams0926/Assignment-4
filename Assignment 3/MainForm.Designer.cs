@@ -142,6 +142,7 @@ namespace Assignment_3
             cardPictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             cardPictureBox1.TabIndex = 8;
             cardPictureBox1.TabStop = false;
+            cardPictureBox1.Click += cardPictureBox1_Click;
             // 
             // cardPictureBox2
             // 
@@ -151,6 +152,7 @@ namespace Assignment_3
             cardPictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             cardPictureBox2.TabIndex = 9;
             cardPictureBox2.TabStop = false;
+            cardPictureBox2.Click += cardPictureBox2_Click;
             // 
             // cardPictureBox3
             // 
@@ -160,6 +162,7 @@ namespace Assignment_3
             cardPictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             cardPictureBox3.TabIndex = 10;
             cardPictureBox3.TabStop = false;
+            cardPictureBox3.Click += cardPictureBox3_Click;
             // 
             // cardPictureBox4
             // 
@@ -169,6 +172,7 @@ namespace Assignment_3
             cardPictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             cardPictureBox4.TabIndex = 11;
             cardPictureBox4.TabStop = false;
+            cardPictureBox4.Click += cardPictureBox4_Click;
             // 
             // cardPictureBox5
             // 
@@ -178,6 +182,7 @@ namespace Assignment_3
             cardPictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             cardPictureBox5.TabIndex = 12;
             cardPictureBox5.TabStop = false;
+            cardPictureBox5.Click += cardPictureBox5_Click;
             // 
             // cardImageList
             // 

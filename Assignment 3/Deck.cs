@@ -20,7 +20,8 @@ namespace Assignment_3
             _imageList = imageList;
         }
 
-        // The shuffle method was almost entirely adapted from AI
+        // The shuffling logic was almost entirely adapted from AI, I struggled to get it
+        // right on my own
 
         /// <summary>
         /// Build and shuffle the deck. If excludeIds is provided, those card Ids are omitted
