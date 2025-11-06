@@ -12,7 +12,7 @@ namespace Assignment_3
         public MainForm()
         {
             InitializeComponent();
-            deck = new Deck(cardImageList); // Move initialization here
+            deck = new Deck(cardImageList);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -39,13 +39,12 @@ namespace Assignment_3
                 GetKeepBox(i).Checked = false;
             }
 
-            // Start with a fresh shuffled deck for a brand new hand
             deck.Shuffle();
 
             // Deal five cards from the deck
             for (int i = 0; i < HAND_SIZE; i++)
             {
-                hand[i] = deck.DealCard(); // Deck.DealCard() returns a Card (or null if empty)
+                hand[i] = deck.DealCard();
             }
 
             UpdateHandImages();

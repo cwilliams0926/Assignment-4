@@ -257,7 +257,7 @@ namespace Assignment_3
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "MainForm";
-            Text = "MainForm";
+            Text = "Poker Hand Simulator";
             Load += MainForm_Load;
             ((System.ComponentModel.ISupportInitialize)cardPictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)cardPictureBox2).EndInit();
