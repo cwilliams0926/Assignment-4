@@ -1,51 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace Assignment_3
 {
     public class Deck
     {
-        private List<Card> cards;
-        private ImageList _imageList;
+        private List<Card> cards = new List<Card>();
+        private readonly ImageList _imageList;
+        private readonly Random rng = new Random();
 
         public Deck(ImageList imageList)
         {
             _imageList = imageList;
         }
 
-        public void Shuffle()
+        // The shuffle method was almost entirely adapted from AI
+
+        /// <summary>
+        /// Build and shuffle the deck. If excludeIds is provided, those card Ids are omitted
+        /// from the deck (useful to avoid dealing duplicates of cards already in a hand).
+        /// </summary>
+        public void Shuffle(IEnumerable<int>? excludeIds = null)
         {
+            var exclude = excludeIds != null ? new HashSet<int>(excludeIds) : null;
             cards = new List<Card>();
             for (int i = 0; i < _imageList.Images.Count; i++)
             {
+                if (exclude != null && exclude.Contains(i))
+                    continue;
                 cards.Add(new Card(i));
             }
 
-            // This part was made with the help of AI
-            Random rng = new Random();
-            int n = cards.Count;
-            while (n > 1)
+            // Fisher–Yates shuffle using single Random instance
+            for (int n = cards.Count - 1; n > 0; n--)
             {
-                int k = rng.Next(n--);
-                Card temp = cards[n];
+                int k = rng.Next(n + 1);
+                Card tmp = cards[n];
                 cards[n] = cards[k];
-                cards[k] = temp;
+                cards[k] = tmp;
             }
         }
 
         public Card DealCard()
         {
-            if (cards.Count == 0)
+            if (cards == null || cards.Count == 0)
             {
+                // sentinel card for "no card available"
                 return new Card(-1);
             }
-            Card dealtCard = cards[0];
+
+            var dealt = cards[0];
             cards.RemoveAt(0);
-            return dealtCard;
+            return dealt;
         }
+
+        public int Count => cards?.Count ?? 0;
 
         public bool SaveHand(string filename, Card[] hand)
         {
@@ -74,7 +89,7 @@ namespace Assignment_3
                 {
                     for (int i = 0; i < hand.Length; i++)
                     {
-                        string line = reader.ReadLine();
+                        string? line = reader.ReadLine();
                         if (line == null)
                         {
                             return false;

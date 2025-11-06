@@ -39,12 +39,20 @@ namespace Assignment_3
                 GetKeepBox(i).Checked = false;
             }
 
+            if (cardImageList.Images.Count < HAND_SIZE)
+            {
+                MessageBox.Show("Not enough images to deal a full hand.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Start with a fresh shuffled deck for a brand new hand
             deck.Shuffle();
 
             // Deal five cards from the deck
             for (int i = 0; i < HAND_SIZE; i++)
             {
-                hand[i] = deck.DealCard();
+                var dealt = deck.DealCard();
+                hand[i] = dealt.Id >= 0 ? dealt : null;
             }
 
             UpdateHandImages();
@@ -52,28 +60,35 @@ namespace Assignment_3
 
         private void DealHand()
         {
-            // If no cards are kept we need a fresh shuffled deck
-            bool anyKept = false;
-            for (int i = 0; i < HAND_SIZE; i++)
+            // Determine which slots are kept and the IDs to exclude
+            var keptIds = Enumerable.Range(0, HAND_SIZE)
+                                    .Where(i => GetKeepBox(i).Checked)
+                                    .Select(i => hand[i]?.Id ?? -1)
+                                    .Where(id => id >= 0)
+                                    .ToList();
+
+            int needed = Enumerable.Range(0, HAND_SIZE).Count(i => !GetKeepBox(i).Checked);
+
+            // Ensure deck has enough cards to fill the unkept slots.
+            // If not, rebuild/shuffle it excluding the kept IDs.
+            if (deck.Count < needed)
             {
-                if (GetKeepBox(i).Checked)
-                {
-                    anyKept = true;
-                    break;
-                }
+                deck.Shuffle(keptIds);
+            }
+            else
+            {
+                // If no cards are kept we can use a full fresh deck (optional)
+                if (!keptIds.Any())
+                    deck.Shuffle();
             }
 
-            if (!anyKept)
-            {
-                deck.Shuffle();
-            }
-
-            // For each slot that is NOT kept, replace it with the next card from the deck
+            // For each slot that is NOT kept, replace it from the deck
             for (int i = 0; i < HAND_SIZE; i++)
             {
                 if (!GetKeepBox(i).Checked)
                 {
-                    hand[i] = deck.DealCard(); // may be null if deck is exhausted
+                    var dealt = deck.DealCard();
+                    hand[i] = dealt.Id >= 0 ? dealt : null;
                 }
             }
 
