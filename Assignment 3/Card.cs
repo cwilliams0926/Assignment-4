@@ -9,10 +9,13 @@ namespace Assignment_3
     public class Card
     {
         public int Id { get; }
+        public Image? CardImage { get; }
+        public static readonly Card Nocard = new Card(-1, null);
 
-        public Card(int id)
+        public Card(int id, Image? image)
         {
             Id = id;
+            CardImage = image;
         }
     }
 }
