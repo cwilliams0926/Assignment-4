@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using System.Drawing;
 
 namespace Assignment_3
 {
@@ -20,8 +21,7 @@ namespace Assignment_3
             _imageList = imageList;
         }
 
-        // The shuffling logic was almost entirely adapted from AI, I struggled to get it
-        // right on my own
+        // The shuffling logic was adapted from AI
 
         /// <summary>
         /// Build and shuffle the deck. If excludeIds is provided, those card Ids are omitted
@@ -29,13 +29,15 @@ namespace Assignment_3
         /// </summary>
         public void Shuffle(IEnumerable<int>? excludeIds = null)
         {
-            var exclude = excludeIds != null ? new HashSet<int>(excludeIds) : null;
+            var exclude = excludeIds != null ? new HashSet<int>(excludeIds.Where(id => id >= 0)) : null;
             cards = new List<Card>();
             for (int i = 0; i < _imageList.Images.Count; i++)
             {
                 if (exclude != null && exclude.Contains(i))
                     continue;
-                cards.Add(new Card(i));
+
+                // create Card with its image from the ImageList
+                cards.Add(new Card(i, _imageList.Images[i]));
             }
 
             // Fisher–Yates shuffle using single Random instance
@@ -52,8 +54,8 @@ namespace Assignment_3
         {
             if (cards == null || cards.Count == 0)
             {
-                // sentinel card for "no card available"
-                return new Card(-1);
+                // use the Card.NoCard sentinel
+                return Card.NoCard;
             }
 
             var dealt = cards[0];
@@ -97,7 +99,19 @@ namespace Assignment_3
                         }
                         if (int.TryParse(line, out int cardId))
                         {
-                            hand[i] = new Card(cardId);
+                            if (cardId == -1)
+                            {
+                                hand[i] = Card.NoCard;
+                            }
+                            else if (cardId >= 0 && cardId < _imageList.Images.Count)
+                            {
+                                hand[i] = new Card(cardId, _imageList.Images[cardId]);
+                            }
+                            else
+                            {
+                                // invalid id in file
+                                return false;
+                            }
                         }
                         else
                         {

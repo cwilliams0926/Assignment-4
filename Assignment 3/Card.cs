@@ -10,7 +10,7 @@ namespace Assignment_3
     {
         public int Id { get; }
         public Image? CardImage { get; }
-        public static readonly Card Nocard = new Card(-1, null);
+        public static readonly Card NoCard = new Card(-1, null);
 
         public Card(int id, Image? image)
         {

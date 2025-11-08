@@ -97,20 +97,12 @@ namespace Assignment_3
 
         private void UpdateHandImages()
         {
-            for (int i = 0; i < HAND_SIZE; i++)
-            {
-                var pic = GetPictureBox(i);
-                var card = hand[i];
-
-                if (card != null && card.Id >= 0 && card.Id < cardImageList.Images.Count)
-                {
-                    pic.Image = cardImageList.Images[card.Id];
-                }
-                else
-                {
-                    pic.Image = null;
-                }
-            }
+            // made it null safe since hand slots can be null
+            cardPictureBox1.Image = hand[0]?.CardImage;
+            cardPictureBox2.Image = hand[1]?.CardImage;
+            cardPictureBox3.Image = hand[2]?.CardImage;
+            cardPictureBox4.Image = hand[3]?.CardImage;
+            cardPictureBox5.Image = hand[4]?.CardImage;
         }
 
         private PictureBox GetPictureBox(int i)
@@ -166,7 +158,7 @@ namespace Assignment_3
                 Card[] toSave = new Card[HAND_SIZE];
                 for (int i = 0; i < HAND_SIZE; i++)
                 {
-                    toSave[i] = hand[i] ?? new Card(-1);
+                    toSave[i] = hand[i] ?? Card.NoCard;
                 }
 
                 if (!deck.SaveHand(saveFileDialog.FileName, toSave))
