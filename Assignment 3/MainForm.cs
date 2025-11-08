@@ -230,5 +230,10 @@ namespace Assignment_3
         {
             keepCheckBox5.Checked = !keepCheckBox5.Checked;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
