@@ -49,13 +49,14 @@ namespace Assignment_3
         {
             if (cardsListBox.SelectedIndex < 0)
                 return;
-            
-            if (cardsListBox.SelectedIndex - 1 < 0 || cardsListBox.SelectedIndex - 1 >= _deck.Count)
+
+            int newIndex = cardsListBox.SelectedIndex - 1;
+            if (newIndex < 0 || newIndex >= _deck.Count)
                 return;
 
-            _deck.SwapCards(cardsListBox.SelectedIndex, cardsListBox.SelectedIndex - 1);
+            _deck.SwapCards(cardsListBox.SelectedIndex, newIndex);
             UpdateDeck();
-            cardsListBox.SetSelected(cardsListBox.SelectedIndex - 1, true);
+            cardsListBox.SetSelected(newIndex, true);
         }
 
         private void downButton_Click(object sender, EventArgs e)
@@ -63,12 +64,13 @@ namespace Assignment_3
             if (cardsListBox.SelectedIndex < 0)
                 return;
 
-            if (cardsListBox.SelectedIndex + 1 < 0 || cardsListBox.SelectedIndex + 1 >= _deck.Count)
+            int newIndex = cardsListBox.SelectedIndex + 1;
+            if (newIndex < 0 || newIndex >= _deck.Count)
                 return;
 
-            _deck.SwapCards(cardsListBox.SelectedIndex, cardsListBox.SelectedIndex + 1);
+            _deck.SwapCards(cardsListBox.SelectedIndex, newIndex);
             UpdateDeck();
-            cardsListBox.SetSelected(cardsListBox.SelectedIndex + 1, true);
+            cardsListBox.SetSelected(newIndex, true);
         }
     }
 }
