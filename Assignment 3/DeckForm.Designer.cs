@@ -72,6 +72,7 @@
             upButton.TabIndex = 3;
             upButton.Text = "&Up";
             upButton.UseVisualStyleBackColor = true;
+            upButton.Click += upButton_Click;
             // 
             // downButton
             // 
@@ -81,6 +82,7 @@
             downButton.TabIndex = 4;
             downButton.Text = "&Down";
             downButton.UseVisualStyleBackColor = true;
+            downButton.Click += downButton_Click;
             // 
             // DeckForm
             // 

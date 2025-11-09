@@ -44,5 +44,31 @@ namespace Assignment_3
         {
 
         }
+
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            if (cardsListBox.SelectedIndex < 0)
+                return;
+            
+            if (cardsListBox.SelectedIndex - 1 < 0 || cardsListBox.SelectedIndex - 1 >= _deck.Count)
+                return;
+
+            _deck.SwapCards(cardsListBox.SelectedIndex, cardsListBox.SelectedIndex - 1);
+            UpdateDeck();
+            cardsListBox.SetSelected(cardsListBox.SelectedIndex - 1, true);
+        }
+
+        private void downButton_Click(object sender, EventArgs e)
+        {
+            if (cardsListBox.SelectedIndex < 0)
+                return;
+
+            if (cardsListBox.SelectedIndex + 1 < 0 || cardsListBox.SelectedIndex + 1 >= _deck.Count)
+                return;
+
+            _deck.SwapCards(cardsListBox.SelectedIndex, cardsListBox.SelectedIndex + 1);
+            UpdateDeck();
+            cardsListBox.SetSelected(cardsListBox.SelectedIndex + 1, true);
+        }
     }
 }
