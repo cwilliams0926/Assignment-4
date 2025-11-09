@@ -38,25 +38,27 @@
             // 
             cardsListBox.FormattingEnabled = true;
             cardsListBox.ItemHeight = 15;
-            cardsListBox.Location = new Point(99, 142);
+            cardsListBox.Location = new Point(99, 115);
             cardsListBox.Name = "cardsListBox";
-            cardsListBox.Size = new Size(120, 94);
+            cardsListBox.Size = new Size(194, 274);
             cardsListBox.TabIndex = 1;
+            cardsListBox.SelectedIndexChanged += cardsListBox_SelectedIndexChanged;
             // 
             // cardsLabel
             // 
             cardsLabel.AutoSize = true;
-            cardsLabel.Location = new Point(99, 115);
+            cardsLabel.Location = new Point(99, 97);
             cardsLabel.Name = "cardsLabel";
             cardsLabel.Size = new Size(37, 15);
             cardsLabel.TabIndex = 0;
             cardsLabel.Text = "&Cards";
+            cardsLabel.Click += cardsLabel_Click;
             // 
             // deckPictureBox
             // 
             deckPictureBox.Location = new Point(336, 115);
             deckPictureBox.Name = "deckPictureBox";
-            deckPictureBox.Size = new Size(123, 174);
+            deckPictureBox.Size = new Size(212, 274);
             deckPictureBox.TabIndex = 2;
             deckPictureBox.TabStop = false;
             // 
@@ -72,6 +74,7 @@
             MinimizeBox = false;
             Name = "DeckForm";
             Text = "DeckForm";
+            Load += DeckForm_Load;
             ((System.ComponentModel.ISupportInitialize)deckPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -22,11 +22,27 @@ namespace Assignment_3
         public void UpdateDeck()
         {
             cardsListBox.Items.Clear();
-            for(int i = 0; i < _deck.Count; i++)
+            for (int i = 0; i < _deck.Count; i++)
             {
                 Card card = _deck.GetCard(i);
                 cardsListBox.Items.Add(card);
             }
+        }
+
+        private void DeckForm_Load(object sender, EventArgs e)
+        {
+            UpdateDeck();
+        }
+
+        private void cardsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Card? card = (Card?)cardsListBox.SelectedItem;
+            deckPictureBox.Image = card?.CardImage;
+        }
+
+        private void cardsLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

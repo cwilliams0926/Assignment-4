@@ -17,5 +17,10 @@ namespace Assignment_3
             Id = id;
             CardImage = image;
         }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }

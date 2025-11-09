@@ -231,9 +231,10 @@ namespace Assignment_3
             keepCheckBox5.Checked = !keepCheckBox5.Checked;
         }
 
+        // This stayed as button1_Click since I didn't rename the button first
         private void button1_Click(object sender, EventArgs e)
         {
-            DeckForm newForm = new DeckForm();
+            DeckForm newForm = new DeckForm(deck);
             newForm.Show();
         }
     }
