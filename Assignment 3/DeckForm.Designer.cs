@@ -31,6 +31,8 @@
             cardsListBox = new ListBox();
             cardsLabel = new Label();
             deckPictureBox = new PictureBox();
+            upButton = new Button();
+            downButton = new Button();
             ((System.ComponentModel.ISupportInitialize)deckPictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -62,11 +64,31 @@
             deckPictureBox.TabIndex = 2;
             deckPictureBox.TabStop = false;
             // 
+            // upButton
+            // 
+            upButton.Location = new Point(99, 395);
+            upButton.Name = "upButton";
+            upButton.Size = new Size(75, 23);
+            upButton.TabIndex = 3;
+            upButton.Text = "&Up";
+            upButton.UseVisualStyleBackColor = true;
+            // 
+            // downButton
+            // 
+            downButton.Location = new Point(218, 395);
+            downButton.Name = "downButton";
+            downButton.Size = new Size(75, 23);
+            downButton.TabIndex = 4;
+            downButton.Text = "&Down";
+            downButton.UseVisualStyleBackColor = true;
+            // 
             // DeckForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(downButton);
+            Controls.Add(upButton);
             Controls.Add(deckPictureBox);
             Controls.Add(cardsLabel);
             Controls.Add(cardsListBox);
@@ -85,5 +107,7 @@
         private ListBox cardsListBox;
         private Label cardsLabel;
         private PictureBox deckPictureBox;
+        private Button upButton;
+        private Button downButton;
     }
 }
