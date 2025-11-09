@@ -1,9 +1,14 @@
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
 namespace Assignment_3
 {
     public partial class MainForm : Form
     {
         private const int HAND_SIZE = 5;
         private Deck deck;
+        private DeckForm? deckForm;
         private Card?[] hand = new Card?[HAND_SIZE];
 
         // file dialog stuff
@@ -47,6 +52,7 @@ namespace Assignment_3
 
             // Start with a fresh shuffled deck for a brand new hand
             deck.Shuffle();
+            deckForm?.UpdateDeck();
 
             // Deal five cards from the deck
             for (int i = 0; i < HAND_SIZE; i++)
@@ -56,6 +62,7 @@ namespace Assignment_3
             }
 
             UpdateHandImages();
+            deckForm?.UpdateDeck();
         }
 
         private void DealHand()
@@ -74,12 +81,16 @@ namespace Assignment_3
             if (deck.Count < needed)
             {
                 deck.Shuffle(keptIds);
+                deckForm?.UpdateDeck();
             }
             else
             {
                 // If no cards are kept we can use a full fresh deck (optional)
                 if (!keptIds.Any())
+                {
                     deck.Shuffle();
+                    deckForm?.UpdateDeck();
+                }
             }
 
             // For each slot that is NOT kept, replace it from the deck
@@ -93,6 +104,7 @@ namespace Assignment_3
             }
 
             UpdateHandImages();
+            deckForm?.UpdateDeck();
         }
 
         private void UpdateHandImages()
@@ -234,8 +246,16 @@ namespace Assignment_3
         // This stayed as button1_Click since I didn't rename the button first
         private void button1_Click(object sender, EventArgs e)
         {
-            DeckForm newForm = new DeckForm(deck);
-            newForm.Show();
+            // Create a modeless DeckForm and keep a reference so we can update it later.
+            if (deckForm == null || deckForm.IsDisposed || !deckForm.Visible)
+            {
+                deckForm = new DeckForm(deck);
+                deckForm.Show();
+            }
+            else
+            {
+                deckForm.BringToFront();
+            }
         }
     }
 }
