@@ -31,13 +31,16 @@ namespace Assignment_3
         {
             var exclude = excludeIds != null ? new HashSet<int>(excludeIds.Where(id => id >= 0)) : null;
             cards = new List<Card>();
+            var keys = _imageList.Images.Keys;
             for (int i = 0; i < _imageList.Images.Count; i++)
             {
                 if (exclude != null && exclude.Contains(i))
                     continue;
 
-                // create Card with its image from the ImageList
-                cards.Add(new Card(i, _imageList.Images[i]));
+                string cardName = keys[i];
+
+                // create Card with its image and name from the ImageList
+                cards.Add(new Card(i, _imageList.Images[i], cardName));
             }
 
             // Fisher–Yates shuffle using single Random instance
@@ -54,7 +57,6 @@ namespace Assignment_3
         {
             if (cards == null || cards.Count == 0)
             {
-                // use the Card.NoCard sentinel
                 return Card.NoCard;
             }
 
@@ -113,6 +115,7 @@ namespace Assignment_3
             {
                 using (StreamReader reader = new StreamReader(filename))
                 {
+                    var keys = _imageList.Images.Keys;
                     for (int i = 0; i < hand.Length; i++)
                     {
                         string? line = reader.ReadLine();
@@ -128,7 +131,8 @@ namespace Assignment_3
                             }
                             else if (cardId >= 0 && cardId < _imageList.Images.Count)
                             {
-                                hand[i] = new Card(cardId, _imageList.Images[cardId]);
+                                string cardName = keys[cardId];
+                                hand[i] = new Card(cardId, _imageList.Images[cardId], cardName);
                             }
                             else
                             {
