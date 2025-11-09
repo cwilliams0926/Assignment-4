@@ -47,7 +47,7 @@ namespace Assignment_3
             cardImageList = new ImageList(components);
             openFileDialog = new OpenFileDialog();
             saveFileDialog = new SaveFileDialog();
-            button1 = new Button();
+            showDeckButton = new Button();
             ((System.ComponentModel.ISupportInitialize)cardPictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cardPictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cardPictureBox3).BeginInit();
@@ -242,22 +242,22 @@ namespace Assignment_3
             cardImageList.Images.SetKeyName(49, "p50.png");
             cardImageList.Images.SetKeyName(50, "p51.png");
             // 
-            // button1
+            // showDeckButton
             // 
-            button1.Location = new Point(166, 49);
-            button1.Name = "button1";
-            button1.Size = new Size(114, 45);
-            button1.TabIndex = 13;
-            button1.Text = "S&how Deck";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            showDeckButton.Location = new Point(166, 49);
+            showDeckButton.Name = "showDeckButton";
+            showDeckButton.Size = new Size(114, 45);
+            showDeckButton.TabIndex = 13;
+            showDeckButton.Text = "S&how Deck";
+            showDeckButton.UseVisualStyleBackColor = true;
+            showDeckButton.Click += button1_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button1);
+            Controls.Add(showDeckButton);
             Controls.Add(cardPictureBox5);
             Controls.Add(cardPictureBox4);
             Controls.Add(cardPictureBox3);
@@ -305,6 +305,6 @@ namespace Assignment_3
         private ImageList cardImageList;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
-        private Button button1;
+        private Button showDeckButton;
     }
 }

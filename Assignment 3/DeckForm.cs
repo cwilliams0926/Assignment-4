@@ -12,9 +12,21 @@ namespace Assignment_3
 {
     public partial class DeckForm : Form
     {
-        public DeckForm()
+        private Deck _deck;
+        public DeckForm(Deck deck)
         {
+            _deck = deck;
             InitializeComponent();
+        }
+
+        public void UpdateDeck()
+        {
+            cardsListBox.Items.Clear();
+            for(int i = 0; i < _deck.Count; i++)
+            {
+                Card card = _deck.GetCard(i);
+                cardsListBox.Items.Add(card);
+            }
         }
     }
 }

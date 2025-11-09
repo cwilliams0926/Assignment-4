@@ -63,7 +63,15 @@ namespace Assignment_3
             return dealt;
         }
 
-        public int Count => cards?.Count ?? 0;
+        // Read-only Count property returning the number of cards remaining.
+        public int Count { get { return cards.Count; } }
+
+        public Card GetCard(int index)
+        {
+            if (index < 0 || index >= (cards?.Count ?? 0))
+                return Card.NoCard;
+            return cards[index];
+        }
 
         public bool SaveHand(string filename, Card[] hand)
         {
